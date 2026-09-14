@@ -1,0 +1,3207 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Design System — Atelier Creativo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700;800&family=Crimson+Pro:wght@300;400;500;600;700&family=DM+Sans:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* ============================================
+           CSS VARIABLES - DESIGN TOKENS
+           ============================================ */
+        :root {
+            /* Primitive - Brown Scale */
+            --brown-50: #F3EAEA;
+            --brown-100: #E9DCDC;
+            --brown-200: #DCCECE;
+            --brown-300: #C5BDBA;
+            --brown-400: #B09595;
+            --brown-500: #967373;
+            --brown-600: #805A5A;
+            --brown-700: #6E4A4A;
+            --brown-800: #5E3D3D;
+            --brown-900: #4F3232;
+            
+            /* Primitive - Neutral Scale */
+            --neutral-50: #FAFAFA;
+            --neutral-100: #F5F5F5;
+            --neutral-200: #E5E5E5;
+            --neutral-300: #D4D4D4;
+            --neutral-400: #A3A3A3;
+            --neutral-500: #737373;
+            --neutral-600: #525252;
+            --neutral-700: #404040;
+            --neutral-800: #262626;
+            --neutral-900: #171717;
+            
+            /* Semantic - Primary (60-30-10 Rule) */
+            --color-primary: var(--brown-700);
+            --color-primary-hover: var(--brown-800);
+            --color-primary-active: var(--brown-900);
+            --color-primary-subtle: var(--brown-100);
+            --color-primary-light: var(--brown-50);
+            --color-on-primary: #FFFFFF;
+            
+            /* Semantic - Background (60% Dominant) */
+            --bg-app: var(--neutral-50);
+            --bg-default: #FFFFFF;
+            --bg-subtle: var(--neutral-100);
+            
+            /* Semantic - Surface (30% Secondary) */
+            --surface-default: #FFFFFF;
+            --surface-elevated: var(--neutral-200);
+            
+            /* Semantic - Text */
+            --text-primary: var(--neutral-900);
+            --text-secondary: var(--neutral-600);
+            --text-disabled: var(--neutral-400);
+            
+            /* Semantic - Border */
+            --border-default: var(--neutral-300);
+            --border-strong: var(--neutral-400);
+            
+            /* Typography */
+            --font-heading: 'Playfair Display', serif;
+            --font-body: 'Inter', sans-serif;
+            --font-scale: 1.25;
+            
+            /* Type Scale */
+            --text-display: 39px;
+            --text-h1: 31px;
+            --text-h2: 25px;
+            --text-title: 20px;
+            --text-body: 16px;
+            --text-small: 13px;
+            --text-overline: 11px;
+            
+            /* Line Heights */
+            --line-height-heading: 1.2;
+            --line-height-body: 1.5;
+            
+            /* Spacing */
+            --space-xs: 4px;
+            --space-sm: 8px;
+            --space-md: 16px;
+            --space-lg: 24px;
+            --space-xl: 32px;
+            --space-2xl: 48px;
+            --space-3xl: 64px;
+            --space-4xl: 96px;
+            
+            /* Border Radius */
+            --radius-sm: 4px;
+            --radius-md: 8px;
+            --radius-lg: 12px;
+            --radius-xl: 16px;
+            --radius-full: 9999px;
+            
+            /* Shadows */
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
+            --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+            --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.15);
+            
+            /* Transitions */
+            --transition-fast: 150ms ease;
+            --transition-base: 250ms ease;
+            --transition-slow: 350ms ease;
+        }
+        
+        /* ============================================
+           RESET & BASE STYLES
+           ============================================ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            font-family: var(--font-body);
+            font-size: var(--text-body);
+            line-height: var(--line-height-body);
+            color: var(--text-primary);
+            background-color: var(--bg-app);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        
+        /* ============================================
+           TYPOGRAPHY
+           ============================================ */
+        h1, h2, h3, h4, h5, h6 {
+            font-family: var(--font-heading);
+            font-weight: 600;
+            line-height: var(--line-height-heading);
+            color: var(--text-primary);
+        }
+        
+        h1 {
+            font-size: var(--text-display);
+            margin-bottom: var(--space-lg);
+        }
+        
+        h2 {
+            font-size: var(--text-h1);
+            margin-bottom: var(--space-md);
+        }
+        
+        h3 {
+            font-size: var(--text-h2);
+            margin-bottom: var(--space-md);
+        }
+        
+        h4 {
+            font-size: var(--text-title);
+            margin-bottom: var(--space-sm);
+        }
+        
+        p {
+            margin-bottom: var(--space-md);
+            color: var(--text-secondary);
+        }
+        
+        /* ============================================
+           NAVIGATION
+           ============================================ */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-default);
+            z-index: 1000;
+            transition: all var(--transition-base);
+        }
+        
+        .navbar.scrolled {
+            box-shadow: var(--shadow-md);
+        }
+        
+        .navbar-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: var(--space-md) var(--space-lg);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+            font-family: var(--font-heading);
+            font-size: var(--text-title);
+            font-weight: 700;
+            color: var(--color-primary);
+            text-decoration: none;
+        }
+        
+        .navbar-logo {
+            width: 40px;
+            height: 40px;
+            background: var(--color-primary);
+            color: var(--color-on-primary);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 18px;
+        }
+        
+        .navbar-menu {
+            display: flex;
+            gap: var(--space-lg);
+            list-style: none;
+        }
+        
+        .navbar-menu a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: var(--text-small);
+            font-weight: 500;
+            transition: color var(--transition-fast);
+            position: relative;
+        }
+        
+        .navbar-menu a:hover {
+            color: var(--color-primary);
+        }
+        
+        .navbar-menu a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--color-primary);
+            transition: width var(--transition-base);
+        }
+        
+        .navbar-menu a:hover::after {
+            width: 100%;
+        }
+        
+        /* ============================================
+           HERO SECTION
+           ============================================ */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--brown-50) 0%, var(--neutral-50) 100%);
+            padding: var(--space-4xl) var(--space-lg);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, var(--brown-100) 0%, transparent 70%);
+            opacity: 0.3;
+            animation: float 20s ease-in-out infinite;
+        }
+        
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            left: -10%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, var(--brown-200) 0%, transparent 70%);
+            opacity: 0.2;
+            animation: float 25s ease-in-out infinite reverse;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            33% { transform: translate(30px, -30px) rotate(120deg); }
+            66% { transform: translate(-20px, 20px) rotate(240deg); }
+        }
+        
+        .hero-content {
+            max-width: 900px;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+            animation: fadeInUp 1s ease-out;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .hero-badge {
+            display: inline-block;
+            padding: var(--space-sm) var(--space-md);
+            background: var(--color-primary-light);
+            color: var(--color-primary);
+            border-radius: var(--radius-full);
+            font-size: var(--text-small);
+            font-weight: 600;
+            margin-bottom: var(--space-lg);
+            letter-spacing: 0.05em;
+        }
+        
+        .hero h1 {
+            font-size: clamp(48px, 8vw, 80px);
+            font-weight: 700;
+            margin-bottom: var(--space-lg);
+            line-height: 1.1;
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--brown-600) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .hero-subtitle {
+            font-size: clamp(20px, 3vw, 28px);
+            font-weight: 300;
+            color: var(--text-secondary);
+            margin-bottom: var(--space-xl);
+            line-height: 1.4;
+        }
+        
+        .hero-description {
+            font-size: var(--text-body);
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto var(--space-2xl);
+            line-height: 1.6;
+        }
+        
+        .hero-cta {
+            display: flex;
+            gap: var(--space-md);
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        /* ============================================
+           BUTTONS
+           ============================================ */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-sm);
+            padding: var(--space-md) var(--space-xl);
+            border-radius: var(--radius-md);
+            font-size: var(--text-body);
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all var(--transition-base);
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+        
+        .btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+        
+        .btn-primary {
+            background: var(--color-primary);
+            color: var(--color-on-primary);
+        }
+        
+        .btn-primary:hover {
+            background: var(--color-primary-hover);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: var(--color-primary);
+            border-color: var(--color-primary);
+        }
+        
+        .btn-secondary:hover {
+            background: var(--color-primary);
+            color: var(--color-on-primary);
+            transform: translateY(-2px);
+        }
+        
+        .btn-ghost {
+            background: transparent;
+            color: var(--text-secondary);
+        }
+        
+        .btn-ghost:hover {
+            background: var(--bg-subtle);
+            color: var(--text-primary);
+        }
+        
+        /* ============================================
+           SECTIONS
+           ============================================ */
+        .section {
+            padding: var(--space-4xl) var(--space-lg);
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: var(--space-3xl);
+        }
+        
+        .section-title {
+            font-size: clamp(32px, 5vw, 48px);
+            margin-bottom: var(--space-md);
+            color: var(--text-primary);
+        }
+        
+        .section-subtitle {
+            font-size: var(--text-title);
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        /* ============================================
+           VISION & MISSION
+           ============================================ */
+        .vision-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: var(--space-2xl);
+            margin-bottom: var(--space-3xl);
+        }
+        
+        .vision-card {
+            background: var(--surface-default);
+            padding: var(--space-2xl);
+            border-radius: var(--radius-xl);
+            border: 1px solid var(--border-default);
+            transition: all var(--transition-base);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .vision-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--color-primary) 0%, var(--brown-500) 100%);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform var(--transition-slow);
+        }
+        
+        .vision-card:hover::before {
+            transform: scaleX(1);
+        }
+        
+        .vision-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-xl);
+            border-color: var(--color-primary);
+        }
+        
+        .vision-icon {
+            width: 64px;
+            height: 64px;
+            background: var(--color-primary-light);
+            color: var(--color-primary);
+            border-radius: var(--radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            margin-bottom: var(--space-lg);
+        }
+        
+        .vision-card h3 {
+            font-size: var(--text-h2);
+            margin-bottom: var(--space-md);
+            color: var(--text-primary);
+        }
+        
+        .vision-card p {
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: var(--space-md);
+        }
+        
+        /* ============================================
+           DESIGN PRINCIPLES
+           ============================================ */
+        .principles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--space-lg);
+            margin-top: var(--space-2xl);
+        }
+        
+        .principle-card {
+            background: var(--surface-default);
+            padding: var(--space-xl);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-default);
+            text-align: center;
+            transition: all var(--transition-base);
+            position: relative;
+        }
+        
+        .principle-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--color-primary);
+        }
+        
+        .principle-number {
+            position: absolute;
+            top: var(--space-md);
+            right: var(--space-md);
+            font-size: 48px;
+            font-weight: 800;
+            color: var(--color-primary-light);
+            opacity: 0.5;
+            line-height: 1;
+        }
+        
+        .principle-card h4 {
+            font-size: var(--text-title);
+            margin-bottom: var(--space-sm);
+            color: var(--color-primary);
+        }
+        
+        .principle-card p {
+            font-size: var(--text-small);
+            color: var(--text-secondary);
+            margin: 0;
+        }
+        
+        /* ============================================
+           EDITOR SECTION
+           ============================================ */
+        .editor-section {
+            background: var(--bg-subtle);
+            padding: var(--space-3xl) var(--space-lg);
+        }
+        
+        .editor-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .editor-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-2xl);
+            margin-top: var(--space-2xl);
+        }
+        
+        .editor-panel {
+            background: var(--surface-default);
+            padding: var(--space-xl);
+            border-radius: var(--radius-xl);
+            border: 1px solid var(--border-default);
+        }
+        
+        .editor-panel h3 {
+            margin-bottom: var(--space-lg);
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+        }
+        
+        .color-editor {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-lg);
+        }
+        
+        .color-group {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-md);
+        }
+        
+        .color-group-label {
+            font-size: var(--text-small);
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+        
+        .color-swatches {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+            gap: var(--space-sm);
+        }
+        
+        .color-swatch {
+            aspect-ratio: 1;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .color-swatch:hover {
+            transform: scale(1.1);
+            border-color: var(--color-primary);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .color-swatch.active {
+            border-color: var(--color-primary);
+            box-shadow: 0 0 0 3px var(--color-primary-light);
+        }
+        
+        .color-swatch-label {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            font-size: 10px;
+            padding: 2px;
+            text-align: center;
+            opacity: 0;
+            transition: opacity var(--transition-fast);
+        }
+        
+        .color-swatch:hover .color-swatch-label {
+            opacity: 1;
+        }
+        
+        .typography-editor {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-lg);
+        }
+        
+        .typography-control {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-sm);
+        }
+        
+        .typography-control label {
+            font-size: var(--text-small);
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+        
+        .typography-control select,
+        .typography-control input {
+            padding: var(--space-sm) var(--space-md);
+            border: 1px solid var(--border-default);
+            border-radius: var(--radius-md);
+            font-family: var(--font-body);
+            font-size: var(--text-body);
+            background: var(--surface-default);
+            transition: all var(--transition-fast);
+        }
+        
+        .typography-control select:focus,
+        .typography-control input:focus {
+            outline: none;
+            border-color: var(--color-primary);
+            box-shadow: 0 0 0 3px var(--color-primary-light);
+        }
+        
+        .typography-preview {
+            padding: var(--space-xl);
+            background: var(--bg-subtle);
+            border-radius: var(--radius-lg);
+            margin-top: var(--space-lg);
+        }
+        
+        .preview-heading {
+            font-family: var(--font-heading);
+            font-size: var(--text-h1);
+            margin-bottom: var(--space-md);
+            color: var(--text-primary);
+        }
+        
+        .preview-body {
+            font-family: var(--font-body);
+            font-size: var(--text-body);
+            color: var(--text-secondary);
+            margin-bottom: var(--space-sm);
+            line-height: var(--line-height-body);
+        }
+        
+        .preview-caption {
+            font-size: var(--text-small);
+            color: var(--text-disabled);
+        }
+        
+        /* ============================================
+           PALETTE SECTION
+           ============================================ */
+        .palette-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--space-lg);
+            margin-top: var(--space-2xl);
+        }
+        
+        .palette-group {
+            background: var(--surface-default);
+            padding: var(--space-xl);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-default);
+        }
+        
+        .palette-group-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--space-lg);
+        }
+        
+        .palette-group-title {
+            font-size: var(--text-title);
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+        
+        .palette-group-percentage {
+            font-size: var(--text-small);
+            font-weight: 600;
+            color: var(--color-primary);
+            background: var(--color-primary-light);
+            padding: var(--space-xs) var(--space-sm);
+            border-radius: var(--radius-full);
+        }
+        
+        .palette-colors {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-sm);
+        }
+        
+        .palette-color-item {
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+            padding: var(--space-sm);
+            border-radius: var(--radius-md);
+            transition: all var(--transition-fast);
+        }
+        
+        .palette-color-item:hover {
+            background: var(--bg-subtle);
+        }
+        
+        .palette-color-box {
+            width: 48px;
+            height: 48px;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-default);
+        }
+        
+        .palette-color-info {
+            flex: 1;
+        }
+        
+        .palette-color-name {
+            font-size: var(--text-body);
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 2px;
+        }
+        
+        .palette-color-hex {
+            font-size: var(--text-small);
+            color: var(--text-secondary);
+            font-family: monospace;
+        }
+        
+        /* ============================================
+           TYPOGRAPHY SYSTEM
+           ============================================ */
+        .typography-system {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-2xl);
+            margin-top: var(--space-2xl);
+        }
+        
+        .type-scale {
+            background: var(--surface-default);
+            padding: var(--space-xl);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-default);
+        }
+        
+        .type-scale h3 {
+            margin-bottom: var(--space-lg);
+        }
+        
+        .type-scale-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            padding: var(--space-md) 0;
+            border-bottom: 1px solid var(--border-default);
+        }
+        
+        .type-scale-item:last-child {
+            border-bottom: none;
+        }
+        
+        .type-scale-sample {
+            color: var(--text-primary);
+        }
+        
+        .type-scale-meta {
+            font-size: var(--text-small);
+            color: var(--text-secondary);
+            font-family: monospace;
+        }
+        
+        .font-weights {
+            background: var(--surface-default);
+            padding: var(--space-xl);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-default);
+        }
+        
+        .font-weights h3 {
+            margin-bottom: var(--space-lg);
+        }
+        
+        .font-weight-item {
+            padding: var(--space-md) 0;
+            border-bottom: 1px solid var(--border-default);
+        }
+        
+        .font-weight-item:last-child {
+            border-bottom: none;
+        }
+        
+        .font-weight-label {
+            font-size: var(--text-small);
+            color: var(--text-secondary);
+            margin-bottom: var(--space-xs);
+        }
+        
+        .font-weight-sample {
+            font-size: var(--text-title);
+            color: var(--text-primary);
+        }
+        
+        /* ============================================
+           TOKEN ARCHITECTURE
+           ============================================ */
+        .token-architecture {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--space-lg);
+            margin-top: var(--space-2xl);
+        }
+        
+        .token-layer {
+            background: var(--surface-default);
+            padding: var(--space-xl);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-default);
+            position: relative;
+        }
+        
+        .token-layer-icon {
+            width: 56px;
+            height: 56px;
+            background: var(--color-primary-light);
+            color: var(--color-primary);
+            border-radius: var(--radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            margin-bottom: var(--space-lg);
+        }
+        
+        .token-layer h4 {
+            font-size: var(--text-title);
+            margin-bottom: var(--space-sm);
+            color: var(--color-primary);
+        }
+        
+        .token-layer-description {
+            font-size: var(--text-small);
+            color: var(--text-secondary);
+            margin-bottom: var(--space-lg);
+            line-height: 1.5;
+        }
+        
+        .token-examples {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-sm);
+        }
+        
+        .token-example {
+            padding: var(--space-sm) var(--space-md);
+            background: var(--bg-subtle);
+            border-radius: var(--radius-md);
+            font-size: var(--text-small);
+            font-family: monospace;
+            color: var(--text-primary);
+        }
+        
+        /* ============================================
+           ATOMIC DESIGN
+           ============================================ */
+        .atomic-levels {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-3xl);
+            margin-top: var(--space-2xl);
+        }
+        
+        .atomic-level {
+            background: var(--surface-default);
+            padding: var(--space-2xl);
+            border-radius: var(--radius-xl);
+            border: 1px solid var(--border-default);
+        }
+        
+        .atomic-level-header {
+            display: flex;
+            align-items: center;
+            gap: var(--space-lg);
+            margin-bottom: var(--space-xl);
+        }
+        
+        .atomic-level-badge {
+            padding: var(--space-sm) var(--space-lg);
+            background: var(--color-primary);
+            color: var(--color-on-primary);
+            border-radius: var(--radius-full);
+            font-size: var(--text-small);
+            font-weight: 700;
+            letter-spacing: 0.1em;
+        }
+        
+        .atomic-level-title {
+            font-size: var(--text-h2);
+            color: var(--text-primary);
+            margin: 0;
+        }
+        
+        .atomic-level-description {
+            color: var(--text-secondary);
+            margin-bottom: var(--space-xl);
+        }
+        
+        .atomic-components {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: var(--space-md);
+        }
+        
+        .atomic-component {
+            padding: var(--space-lg);
+            background: var(--bg-subtle);
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-default);
+            text-align: center;
+            transition: all var(--transition-fast);
+            cursor: pointer;
+        }
+        
+        .atomic-component:hover {
+            background: var(--surface-default);
+            border-color: var(--color-primary);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .atomic-component-label {
+            font-size: var(--text-small);
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        
+        /* ============================================
+           WIREFRAME BUILDER
+           ============================================ */
+        .wireframe-builder {
+            background: var(--bg-subtle);
+            padding: var(--space-2xl);
+            border-radius: var(--radius-xl);
+            margin-top: var(--space-2xl);
+        }
+        
+        .wireframe-toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--space-xl);
+            padding: var(--space-md);
+            background: var(--surface-default);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-default);
+        }
+        
+        .wireframe-templates {
+            display: flex;
+            gap: var(--space-sm);
+            flex-wrap: wrap;
+        }
+        
+        .wireframe-template-btn {
+            padding: var(--space-sm) var(--space-md);
+            background: var(--bg-subtle);
+            border: 1px solid var(--border-default);
+            border-radius: var(--radius-md);
+            font-size: var(--text-small);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+        
+        .wireframe-template-btn:hover {
+            background: var(--color-primary-light);
+            border-color: var(--color-primary);
+            color: var(--color-primary);
+        }
+        
+        .wireframe-canvas {
+            min-height: 500px;
+            background: var(--surface-default);
+            border: 2px dashed var(--border-default);
+            border-radius: var(--radius-lg);
+            padding: var(--space-xl);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-disabled);
+            font-size: var(--text-title);
+        }
+        
+        .wireframe-components {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: var(--space-md);
+            margin-top: var(--space-xl);
+        }
+        
+        .wireframe-component {
+            padding: var(--space-md);
+            background: var(--surface-default);
+            border: 1px solid var(--border-default);
+            border-radius: var(--radius-md);
+            text-align: center;
+            cursor: grab;
+            transition: all var(--transition-fast);
+        }
+        
+        .wireframe-component:hover {
+            border-color: var(--color-primary);
+            box-shadow: var(--shadow-md);
+            transform: translateY(-2px);
+        }
+        
+        .wireframe-component:active {
+            cursor: grabbing;
+        }
+        
+        .wireframe-component-icon {
+            font-size: 32px;
+            margin-bottom: var(--space-sm);
+        }
+        
+        .wireframe-component-label {
+            font-size: var(--text-small);
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        
+        /* ============================================
+           SERVICES SECTION
+           ============================================ */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: var(--space-2xl);
+            margin-top: var(--space-2xl);
+        }
+        
+        .service-card {
+            background: var(--surface-default);
+            border-radius: var(--radius-xl);
+            overflow: hidden;
+            border: 1px solid var(--border-default);
+            transition: all var(--transition-base);
+            position: relative;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-xl);
+            border-color: var(--color-primary);
+        }
+        
+        .service-card-header {
+            padding: var(--space-2xl);
+            background: linear-gradient(135deg, var(--color-primary-light) 0%, var(--brown-50) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .service-card-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, var(--brown-100) 0%, transparent 70%);
+            opacity: 0.3;
+        }
+        
+        .service-number {
+            position: absolute;
+            top: var(--space-lg);
+            right: var(--space-lg);
+            font-size: 72px;
+            font-weight: 800;
+            color: var(--color-primary);
+            opacity: 0.1;
+            line-height: 1;
+        }
+        
+        .service-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--color-primary);
+            color: var(--color-on-primary);
+            border-radius: var(--radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            margin-bottom: var(--space-lg);
+            position: relative;
+            z-index: 1;
+        }
+        
+        .service-title {
+            font-size: var(--text-h2);
+            color: var(--text-primary);
+            margin-bottom: var(--space-sm);
+            position: relative;
+            z-index: 1;
+        }
+        
+        .service-subtitle {
+            font-size: var(--text-small);
+            color: var(--color-primary);
+            font-weight: 600;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .service-card-body {
+            padding: var(--space-2xl);
+        }
+        
+        .service-description {
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: var(--space-xl);
+        }
+        
+        .service-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--space-sm);
+            margin-bottom: var(--space-xl);
+        }
+        
+        .service-tag {
+            padding: var(--space-xs) var(--space-md);
+            background: var(--bg-subtle);
+            border-radius: var(--radius-full);
+            font-size: var(--text-small);
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+        
+        .service-cta {
+            display: flex;
+            gap: var(--space-md);
+        }
+        
+        /* ============================================
+           EXPORT SECTION
+           ============================================ */
+        .export-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--space-lg);
+            margin-top: var(--space-2xl);
+        }
+        
+        .export-card {
+            background: var(--surface-default);
+            padding: var(--space-xl);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-default);
+            text-align: center;
+            transition: all var(--transition-base);
+            cursor: pointer;
+        }
+        
+        .export-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--color-primary);
+        }
+        
+        .export-icon {
+            width: 64px;
+            height: 64px;
+            background: var(--color-primary-light);
+            color: var(--color-primary);
+            border-radius: var(--radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            margin: 0 auto var(--space-lg);
+        }
+        
+        .export-title {
+            font-size: var(--text-title);
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: var(--space-sm);
+        }
+        
+        .export-description {
+            font-size: var(--text-small);
+            color: var(--text-secondary);
+        }
+        
+        /* ============================================
+           FOOTER
+           ============================================ */
+        .footer {
+            background: var(--neutral-900);
+            color: var(--neutral-100);
+            padding: var(--space-3xl) var(--space-lg) var(--space-xl);
+            margin-top: var(--space-4xl);
+        }
+        
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: var(--space-2xl);
+            margin-bottom: var(--space-2xl);
+        }
+        
+        .footer-brand {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-md);
+        }
+        
+        .footer-logo {
+            font-family: var(--font-heading);
+            font-size: var(--text-h2);
+            font-weight: 700;
+            color: var(--neutral-100);
+            margin-bottom: var(--space-md);
+        }
+        
+        .footer-description {
+            color: var(--neutral-400);
+            line-height: 1.6;
+            font-size: var(--text-small);
+        }
+        
+        .footer-section h4 {
+            color: var(--neutral-100);
+            font-size: var(--text-title);
+            margin-bottom: var(--space-lg);
+        }
+        
+        .footer-links {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-sm);
+        }
+        
+        .footer-links a {
+            color: var(--neutral-400);
+            text-decoration: none;
+            font-size: var(--text-small);
+            transition: color var(--transition-fast);
+        }
+        
+        .footer-links a:hover {
+            color: var(--neutral-100);
+        }
+        
+        .footer-bottom {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding-top: var(--space-xl);
+            border-top: 1px solid var(--neutral-800);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--neutral-500);
+            font-size: var(--text-small);
+        }
+        
+        /* ============================================
+           RESPONSIVE DESIGN
+           ============================================ */
+        @media (max-width: 1024px) {
+            .editor-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .palette-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .typography-system {
+                grid-template-columns: 1fr;
+            }
+            
+            .token-architecture {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .navbar-menu {
+                display: none;
+            }
+            
+            .hero h1 {
+                font-size: 48px;
+            }
+            
+            .vision-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .principles-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .export-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-bottom {
+                flex-direction: column;
+                gap: var(--space-md);
+                text-align: center;
+            }
+        }
+        
+        /* ============================================
+           ANIMATIONS
+           ============================================ */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        .animate-fadeIn {
+            animation: fadeIn 0.6s ease-out;
+        }
+        
+        .animate-slideInLeft {
+            animation: slideInLeft 0.6s ease-out;
+        }
+        
+        .animate-slideInRight {
+            animation: slideInRight 0.6s ease-out;
+        }
+        
+        .animate-scaleIn {
+            animation: scaleIn 0.6s ease-out;
+        }
+        
+        /* ============================================
+           UTILITY CLASSES
+           ============================================ */
+        .text-center {
+            text-align: center;
+        }
+        
+        .text-primary {
+            color: var(--color-primary);
+        }
+        
+        .text-secondary {
+            color: var(--text-secondary);
+        }
+        
+        .mt-0 { margin-top: 0; }
+        .mt-1 { margin-top: var(--space-sm); }
+        .mt-2 { margin-top: var(--space-md); }
+        .mt-3 { margin-top: var(--space-lg); }
+        .mt-4 { margin-top: var(--space-xl); }
+        .mt-5 { margin-top: var(--space-2xl); }
+        
+        .mb-0 { margin-bottom: 0; }
+        .mb-1 { margin-bottom: var(--space-sm); }
+        .mb-2 { margin-bottom: var(--space-md); }
+        .mb-3 { margin-bottom: var(--space-lg); }
+        .mb-4 { margin-bottom: var(--space-xl); }
+        .mb-5 { margin-bottom: var(--space-2xl); }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .visible {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <!-- NAVIGATION -->
+    <nav class="navbar" id="navbar">
+        <div class="navbar-container">
+            <a href="#" class="navbar-brand">
+                <div class="navbar-logo">AC</div>
+                <span>Atelier Creativo</span>
+            </a>
+            <ul class="navbar-menu">
+                <li><a href="#vision">Vision</a></li>
+                <li><a href="#editor">Editor</a></li>
+                <li><a href="#palette">Palette</a></li>
+                <li><a href="#typography">Tipografia</a></li>
+                <li><a href="#tokens">Token</a></li>
+                <li><a href="#atomic">Atomic</a></li>
+                <li><a href="#wireframe">Wireframe</a></li>
+                <li><a href="#services">Servizi</a></li>
+                <li><a href="#export">Export</a></li>
+            </ul>
+        </div>
+    </nav>
+    
+    <!-- HERO SECTION -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-badge">Design System & Brand Identity</div>
+            <h1>Dove l'Artigianato<br>incontra il Design</h1>
+            <p class="hero-subtitle">Un sistema visivo coerente che unisce sei discipline creative sotto un'unica identità raffinata, calda e professionale</p>
+            <p class="hero-description">
+                Con Atomic Design, wireframe builder e mockup interattivi. Ogni dettaglio è pensato per comunicare eleganza, competenza e autenticità.
+            </p>
+            <div class="hero-cta">
+                <a href="#editor" class="btn btn-primary">Inizia a Personalizzare</a>
+                <a href="#services" class="btn btn-secondary">Scopri i Servizi</a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- VISION & MISSION -->
+    <section class="section" id="vision">
+        <div class="section-header">
+            <h2 class="section-title">La Nostra Filosofia</h2>
+            <p class="section-subtitle">Crediamo nella bellezza dell'artigianato applicata al digitale</p>
+        </div>
+        
+        <div class="vision-grid">
+            <div class="vision-card">
+                <div class="vision-icon">👁️</div>
+                <h3>La Nostra Vision</h3>
+                <p>
+                    Crediamo che ogni progetto creativo meriti un'identità visiva che ne racconti l'anima. Il nostro obiettivo è creare un ecosistema dove gioielleria, illustrazione, animazione, graphic design, sartoria e sviluppo web non siano servizi separati, ma espressioni di un unico linguaggio estetico.
+                </p>
+                <p>
+                    Immaginiamo un mondo dove la bellezza artigianale e la precisione digitale coesistono, dove ogni dettaglio — dal punto di un ricamo al pixel di un'interfaccia — comunica cura, passione e autenticità.
+                </p>
+            </div>
+            
+            <div class="vision-card">
+                <div class="vision-icon">🎯</div>
+                <h3>La Nostra Mission</h3>
+                <p>
+                    Offriamo servizi creativi di eccellenza attraverso un approccio olistico e multidisciplinare. Ogni progetto viene trattato come un'opera unica, con la stessa dedizione che un maestro artigiano dedica al suo lavoro.
+                </p>
+                <p>
+                    Il nostro Design System garantisce coerenza, accessibilità e scalabilità in ogni deliverable — che sia un gioiello fisico o un'interfaccia digitale. Standard professionali elevati, tempi rispettati, comunicazione trasparente.
+                </p>
+            </div>
+            
+            <div class="vision-card">
+                <div class="vision-icon">💬</div>
+                <h3>Cosa Comunichiamo</h3>
+                <p>
+                    Il nostro brand comunica eleganza sobria, competenza tecnica e calore umano. Il burgundy desaturato (#6E4A4A) evoca tradizione e raffinatezza, mentre la palette neutra trasmette modernità e pulizia.
+                </p>
+                <p>
+                    Ogni touchpoint — dal biglietto da visita al sito web — deve trasmettere: "Qui ogni dettaglio è pensato. Qui il tuo progetto è nelle mani giuste."
+                </p>
+            </div>
+        </div>
+        
+        <div class="principles-grid">
+            <div class="principle-card">
+                <div class="principle-number">01</div>
+                <h4>Artigianalità Digitale</h4>
+                <p>Ogni pixel curato come un punto di ricamo</p>
+            </div>
+            
+            <div class="principle-card">
+                <div class="principle-number">02</div>
+                <h4>Coerenza Totale</h4>
+                <p>Un linguaggio visivo unico su ogni medium</p>
+            </div>
+            
+            <div class="principle-card">
+                <div class="principle-number">03</div>
+                <h4>Eleganza Sobria</h4>
+                <p>Lusso che non urla, qualità che si sente</p>
+            </div>
+            
+            <div class="principle-card">
+                <div class="principle-number">04</div>
+                <h4>Atomic Design</h4>
+                <p>Componenti scalabili dal singolo atomo alla pagina</p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- EDITOR SECTION -->
+    <section class="editor-section" id="editor">
+        <div class="editor-container">
+            <div class="section-header">
+                <h2 class="section-title">Editor Live</h2>
+                <p class="section-subtitle">Modifica colori, tipografia e proporzioni in tempo reale. Ogni cambiamento si applica istantaneamente a tutto il sistema.</p>
+            </div>
+            
+            <div class="editor-grid">
+                <!-- Color Editor -->
+                <div class="editor-panel">
+                    <h3>🎨 Colori</h3>
+                    <div class="color-editor">
+                        <div class="color-group">
+                            <div class="color-group-label">60% Dominant — Background</div>
+                            <div class="color-swatches">
+                                <div class="color-swatch" style="background: var(--neutral-50);" data-color="--bg-app">
+                                    <div class="color-swatch-label">bg-app</div>
+                                </div>
+                                <div class="color-swatch" style="background: #FFFFFF;" data-color="--bg-default">
+                                    <div class="color-swatch-label">bg-default</div>
+                                </div>
+                                <div class="color-swatch" style="background: var(--neutral-100);" data-color="--bg-subtle">
+                                    <div class="color-swatch-label">bg-subtle</div>
+                                </div>
+                                <div class="color-swatch" style="background: var(--neutral-900);" data-color="--text-primary">
+                                    <div class="color-swatch-label">text-1</div>
+                                </div>
+                                <div class="color-swatch" style="background: var(--neutral-600);" data-color="--text-secondary">
+                                    <div class="color-swatch-label">text-2</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="color-group">
+                            <div class="color-group-label">30% Secondary — Surface</div>
+                            <div class="color-swatches">
+                                <div class="color-swatch" style="background: #FFFFFF;" data-color="--surface-default">
+                                    <div class="color-swatch-label">surface</div>
+                                </div>
+                                <div class="color-swatch" style="background: var(--neutral-200);" data-color="--surface-elevated">
+                                    <div class="color-swatch-label">elevated</div>
+                                </div>
+                                <div class="color-swatch" style="background: var(--neutral-300);" data-color="--border-default">
+                                    <div class="color-swatch-label">border</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="color-group">
+                            <div class="color-group-label">10% Accent — Primary</div>
+                            <div class="color-swatches">
+                                <div class="color-swatch active" style="background: var(--brown-700);" data-color="--color-primary">
+                                    <div class="color-swatch-label">primary★</div>
+                                </div>
+                                <div class="color-swatch" style="background: var(--brown-800);" data-color="--color-primary-hover">
+                                    <div class="color-swatch-label">hover</div>
+                                </div>
+                                <div class="color-swatch" style="background: var(--brown-900);" data-color="--color-primary-active">
+                                    <div class="color-swatch-label">active</div>
+                                </div>
+                                <div class="color-swatch" style="background: var(--brown-100);" data-color="--color-primary-subtle">
+                                    <div class="color-swatch-label">subtle</div>
+                                </div>
+                                <div class="color-swatch" style="background: var(--brown-50);" data-color="--color-primary-light">
+                                    <div class="color-swatch-label">light</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div style="display: flex; gap: var(--space-md); margin-top: var(--space-lg);">
+                            <button class="btn btn-ghost" onclick="resetColors()">↺ Reset Colori</button>
+                            <button class="btn btn-ghost" onclick="randomBrand()">🎲 Brand Casuale</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Typography Editor -->
+                <div class="editor-panel">
+                    <h3>✍️ Tipografia</h3>
+                    <div class="typography-editor">
+                        <div class="typography-control">
+                            <label>Font Titoli (Heading)</label>
+                            <select id="headingFont" onchange="updateTypography()">
+                                <option value="'Playfair Display', serif">Playfair Display (Serif)</option>
+                                <option value="'Crimson Pro', serif">Crimson Pro (Serif)</option>
+                                <option value="'Inter', sans-serif">Inter (Sans-Serif)</option>
+                                <option value="'DM Sans', sans-serif">DM Sans (Sans-Serif)</option>
+                                <option value="'Space Grotesk', sans-serif">Space Grotesk (Sans-Serif)</option>
+                            </select>
+                        </div>
+                        
+                        <div class="typography-control">
+                            <label>Font Corpo (Body)</label>
+                            <select id="bodyFont" onchange="updateTypography()">
+                                <option value="'Inter', sans-serif">Inter (Sans-Serif)</option>
+                                <option value="'DM Sans', sans-serif">DM Sans (Sans-Serif)</option>
+                                <option value="'Space Grotesk', sans-serif">Space Grotesk (Sans-Serif)</option>
+                                <option value="'Crimson Pro', serif">Crimson Pro (Serif)</option>
+                                <option value="'Playfair Display', serif">Playfair Display (Serif)</option>
+                            </select>
+                        </div>
+                        
+                        <div class="typography-control">
+                            <label>Scala Dimensione Base</label>
+                            <input type="number" id="typeScale" value="1.25" step="0.05" min="1" max="2" onchange="updateTypography()">
+                        </div>
+                        
+                        <div class="typography-control">
+                            <label>Interlinea (Line Height)</label>
+                            <input type="number" id="lineHeight" value="1.5" step="0.1" min="1" max="2.5" onchange="updateTypography()">
+                        </div>
+                        
+                        <div class="typography-preview">
+                            <div class="preview-heading">Anteprima Titolo Heading</div>
+                            <div class="preview-body">Anteprima testo body. Il design system garantisce coerenza su ogni medium.</div>
+                            <div class="preview-caption">Testo secondario più piccolo per didascalie e note.</div>
+                        </div>
+                        
+                        <button class="btn btn-ghost" onclick="resetTypography()">↺ Reset Tipografia</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- PALETTE SECTION -->
+    <section class="section" id="palette">
+        <div class="section-header">
+            <h2 class="section-title">Palette Semantica</h2>
+            <p class="section-subtitle">Costruita attorno al brand color con la regola 60-30-10 come principio compositivo</p>
+        </div>
+        
+        <div class="palette-grid">
+            <!-- Dominant 60% -->
+            <div class="palette-group">
+                <div class="palette-group-header">
+                    <div class="palette-group-title">Dominant</div>
+                    <div class="palette-group-percentage">60%</div>
+                </div>
+                <div class="palette-colors">
+                    <div class="palette-color-item">
+                        <div class="palette-color-box" style="background: var(--neutral-50);"></div>
+                        <div class="palette-color-info">
+                            <div class="palette-color-name">bg-app</div>
+                            <div class="palette-color-hex">#FAFAFA</div>
+                        </div>
+                    </div>
+                    <div class="palette-color-item">
+                        <div class="palette-color-box" style="background: #FFFFFF;"></div>
+                        <div class="palette-color-info">
+                            <div class="palette-color-name">bg-default</div>
+                            <div class="palette-color-hex">#FFFFFF</div>
+                        </div>
+                    </div>
+                    <div class="palette-color-item">
+                        <div class="palette-color-box" style="background: var(--neutral-100);"></div>
+                        <div class="palette-color-info">
+                            <div class="palette-color-name">bg-subtle</div>
+                            <div class="palette-color-hex">#F5F5F5</div>
+                        </div>
+                    </div>
+                    <div class="palette-color-item">
+                        <div class="palette-color-box" style="background: var(--neutral-900);"></div>
+                        <div class="palette-color-info">
+                            <div class="palette-color-name">text-primary</div>
+                            <div class="palette-color-hex">#171717</div>
+                        </div>
+                    </div>
+                    <div class="palette-color-item">
+                        <div class="palette-color-box" style="background: var(--neutral-600);"></div>
+                        <div class="palette-color-info">
+                            <div class="palette-color-name">text-secondary</div>
+                            <div class="palette-color-hex">#525252</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Secondary 30% -->
+            <div class="palette-group">
+                <div class="palette-group-header">
+                    <div class="palette-group-title">Secondary</div>
+                    <div class="palette-group-percentage">30%</div>
+                </div>
+                <div class="palette-colors">
+                    <div class="palette-color-item">
+                        <div class="palette-color-box" style="background: #FFFFFF;"></div>
+                        <div class="palette-color-info">
+                            <div class="palette-color-name">surface-default</div>
+                            <div class="palette-color-hex">#FFFFFF</div>
+                        </div>
+                    </div>
+                    <div class="palette-color-item">
+                        <div class="palette-color-box" style="background: var(--neutral-200);"></div>
+                        <div class="palette-color-info">
+                            <div class="palette-color-name">surface-elevated</div>
+                            <div class="palette-color-hex">#E5E5E5</div>
+                        </div>
+                    </div>
+                    <div class="palette-color-item">
+                        <div class="palette-color-box" style="background: var(--neutral-300);"></div>
+                        <div class="palette-color-info">
+                            <div class="palette-color-name">border-default</div>
+                            <div class="palette-color-hex">#D4D4D4</div>
+                        </div>
+                    </div>
+                    <div class="palette-color-item">
+                        <div class="palette-color-box" style="background: var(--neutral-400);"></div>
+                        <div class="palette-color-info">
+                            <div class="palette-color-name">border-strong</div>
+                            <div class="palette-color-hex">#A3A3A3</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Accent 10% -->
+            <div class="palette-group">
+                <div class="palette-group-header">
+                    <div class="palette-group-title">Accent</div>
+                    <div class="palette-group-percentage">10%</div>
+                </div>
+                <div class="palette-colors">
+                    <div class="palette-color-item">
+                        <div class="palette-color-box" style="background: var(--brown-700);"></div>
+                        <div class="palette-color-info">
+                            <div class="palette-color-name">primary ★</div>
+                            <div class="palette-color-hex">#6E4A4A</div>
+                        </div>
+                    </div>
+                    <div class="palette-color-item">
+                        <div class="palette-color-box" style="background: var(--brown-800);"></div>
+                        <div class="palette-color-info">
+                            <div class="palette-color-name">primary-hover</div>
+                            <div class="palette-color-hex">#5E3D3D</div>
+                        </div>
+                    </div>
+                    <div class="palette-color-item">
+                        <div class="palette-color-box" style="background: var(--brown-900);"></div>
+                        <div class="palette-color-info">
+                            <div class="palette-color-name">primary-active</div>
+                            <div class="palette-color-hex">#4F3232</div>
+                        </div>
+                    </div>
+                    <div class="palette-color-item">
+                        <div class="palette-color-box" style="background: var(--brown-100);"></div>
+                        <div class="palette-color-info">
+                            <div class="palette-color-name">primary-subtle</div>
+                            <div class="palette-color-hex">#E9DCDC</div>
+                        </div>
+                    </div>
+                    <div class="palette-color-item">
+                        <div class="palette-color-box" style="background: var(--brown-50);"></div>
+                        <div class="palette-color-info">
+                            <div class="palette-color-name">primary-light</div>
+                            <div class="palette-color-hex">#F3EAEA</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- TYPOGRAPHY SYSTEM -->
+    <section class="section" id="typography">
+        <div class="section-header">
+            <h2 class="section-title">Sistema Tipografico</h2>
+            <p class="section-subtitle">Scale modulare, pesi e gerarchia per una comunicazione visiva coerente</p>
+        </div>
+        
+        <div class="typography-system">
+            <div class="type-scale">
+                <h3>Type Scale</h3>
+                <div class="type-scale-item">
+                    <div class="type-scale-sample" style="font-size: 39px; font-weight: 700;">Display</div>
+                    <div class="type-scale-meta">39px / 2.441</div>
+                </div>
+                <div class="type-scale-item">
+                    <div class="type-scale-sample" style="font-size: 31px; font-weight: 600;">Heading 1</div>
+                    <div class="type-scale-meta">31px / 1.953</div>
+                </div>
+                <div class="type-scale-item">
+                    <div class="type-scale-sample" style="font-size: 25px; font-weight: 600;">Heading 2</div>
+                    <div class="type-scale-meta">25px / 1.563</div>
+                </div>
+                <div class="type-scale-item">
+                    <div class="type-scale-sample" style="font-size: 20px; font-weight: 600;">Title</div>
+                    <div class="type-scale-meta">20px / 1.25</div>
+                </div>
+                <div class="type-scale-item">
+                    <div class="type-scale-sample" style="font-size: 16px; font-weight: 400;">Body Text</div>
+                    <div class="type-scale-meta">16px / 1.0</div>
+                </div>
+                <div class="type-scale-item">
+                    <div class="type-scale-sample" style="font-size: 13px; font-weight: 400;">Small / Caption</div>
+                    <div class="type-scale-meta">13px / 0.8</div>
+                </div>
+                <div class="type-scale-item">
+                    <div class="type-scale-sample" style="font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em;">Overline / Label</div>
+                    <div class="type-scale-meta">11px / 0.68</div>
+                </div>
+            </div>
+            
+            <div class="font-weights">
+                <h3>Font Weights</h3>
+                <div class="font-weight-item">
+                    <div class="font-weight-label">Light 300</div>
+                    <div class="font-weight-sample" style="font-weight: 300;">Eleganza nell'ogni dettaglio</div>
+                </div>
+                <div class="font-weight-item">
+                    <div class="font-weight-label">Regular 400</div>
+                    <div class="font-weight-sample" style="font-weight: 400;">Eleganza nell'ogni dettaglio</div>
+                </div>
+                <div class="font-weight-item">
+                    <div class="font-weight-label">Medium 500</div>
+                    <div class="font-weight-sample" style="font-weight: 500;">Eleganza nell'ogni dettaglio</div>
+                </div>
+                <div class="font-weight-item">
+                    <div class="font-weight-label">SemiBold 600</div>
+                    <div class="font-weight-sample" style="font-weight: 600;">Eleganza nell'ogni dettaglio</div>
+                </div>
+                <div class="font-weight-item">
+                    <div class="font-weight-label">Bold 700</div>
+                    <div class="font-weight-sample" style="font-weight: 700;">Eleganza nell'ogni dettaglio</div>
+                </div>
+                <div class="font-weight-item">
+                    <div class="font-weight-label">ExtraBold 800</div>
+                    <div class="font-weight-sample" style="font-weight: 800;">Eleganza nell'ogni dettaglio</div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- TOKEN ARCHITECTURE -->
+    <section class="section" id="tokens">
+        <div class="section-header">
+            <h2 class="section-title">Architettura Token</h2>
+            <p class="section-subtitle">Primitive → Semantic → Component — per manutenibilità e scalabilità</p>
+        </div>
+        
+        <div class="token-architecture">
+            <div class="token-layer">
+                <div class="token-layer-icon">🎨</div>
+                <h4>Primitive</h4>
+                <p class="token-layer-description">
+                    Valori base: Brown 50 → 900, Neutral 50 → 900. Brown 700 = #6E4A4A è il brand color.
+                </p>
+                <div class="token-examples">
+                    <div class="token-example">--brown-700: #6E4A4A</div>
+                    <div class="token-example">--neutral-100: #F5F5F5</div>
+                    <div class="token-example">--brown-50: #F3EAEA</div>
+                </div>
+            </div>
+            
+            <div class="token-layer">
+                <div class="token-layer-icon">🏷️</div>
+                <h4>Semantic</h4>
+                <p class="token-layer-description">
+                    Significato contestuale: Primary, Background, Text, Border, Status. primary → Brown 700.
+                </p>
+                <div class="token-examples">
+                    <div class="token-example">--color-primary: var(--brown-700)</div>
+                    <div class="token-example">--bg-app: var(--neutral-50)</div>
+                    <div class="token-example">--text-primary: var(--neutral-900)</div>
+                </div>
+            </div>
+            
+            <div class="token-layer">
+                <div class="token-layer-icon">🧩</div>
+                <h4>Component</h4>
+                <p class="token-layer-description">
+                    Specifici per componente: Button, Card, Input, Badge, Alert, Nav. Button.bg → primary.
+                </p>
+                <div class="token-examples">
+                    <div class="token-example">--button-bg: var(--color-primary)</div>
+                    <div class="token-example">--card-border: var(--border-default)</div>
+                    <div class="token-example">--input-focus: var(--color-primary)</div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- ATOMIC DESIGN -->
+    <section class="section" id="atomic">
+        <div class="section-header">
+            <h2 class="section-title">Atomic Design</h2>
+            <p class="section-subtitle">Metodologia di Brad Frost: dai singoli atomi fino alle pagine complete</p>
+        </div>
+        
+        <div class="atomic-levels">
+            <!-- Atoms -->
+            <div class="atomic-level">
+                <div class="atomic-level-header">
+                    <div class="atomic-level-badge">ATOMS</div>
+                    <h3 class="atomic-level-title">⚛️ I mattoni fondamentali del sistema</h3>
+                </div>
+                <p class="atomic-level-description">
+                    Gli atomi sono gli elementi HTML base: button, input, label, badge, icon. Sono i building blocks indivisibili del sistema.
+                </p>
+                <div class="atomic-components">
+                    <div class="atomic-component">
+                        <div class="atomic-component-label">Button</div>
+                    </div>
+                    <div class="atomic-component">
+                        <div class="atomic-component-label">Button Primary</div>
+                    </div>
+                    <div class="atomic-component">
+                        <div class="atomic-component-label">Button Outline</div>
+                    </div>
+                    <div class="atomic-component">
+                        <div class="atomic-component-label">Text Input</div>
+                    </div>
+                    <div class="atomic-component">
+                        <div class="atomic-component-label">Badge</div>
+                    </div>
+                    <div class="atomic-component">
+                        <div class="atomic-component-label">Avatar Icon</div>
+                    </div>
+                    <div class="atomic-component">
+                        <div class="atomic-component-label">Text Label</div>
+                    </div>
+                    <div class="atomic-component">
+                        <div class="atomic-component-label">Divider</div>
+                    </div>
+                    <div class="atomic-component">
+                        <div class="atomic-component-label">Checkbox</div>
+                    </div>
+                    <div class="atomic-component">
+                        <div class="atomic-component-label">Toggle</div>
+                    </div>
+                    <div class="atomic-component">
+                        <div class="atomic-component-label">Tag</div>
+                    </div>
+                    <div class="atomic-component">
+                        <div class="atomic-component-label">Spinner</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Molecules -->
+            <div class="atomic-level">
+                <div class="atomic-level-header">
+                    <div class="atomic-level-badge">MOLECULES</div>
+                    <h3 class="atomic-level-title">🧪 Combinazioni di atomi con funzione specifica</h3>
+                </div>
+                <p class="atomic-level-description">
+                    Le molecole sono combinazioni di atomi che formano componenti con una funzione specifica: search bar, card item, nav link.
+                </p>
+                <div class="atomic-components">
+                    <div class="atomic-component">
+                        <div class="atomic-component-label">Search Bar</div>
+                    </div>
+                    <div class="atomic-component">
+                        <div class="atomic-component-label">Form Field + Label</div>
+                    </div>
+                    <div class="atomic-component">
+                        <div class="atomic-component-label">User Card Mini</div>
+                    </div>
+                    <div class="atomic-component">
+                        <div class="atomic-component-label">Alert / Notification</div>
+                    </div>
+                    <div class="atomic-component">
+                        <div class="atomic-component-label">Nav Item + Badge</div>
+                    </div>
+                    <div class="atomic-component">
+                        <div class="atomic-component-label">Price Tag + Discount</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Organisms -->
+            <div class="atomic-level">
+                <div class="atomic-level-header">
+                    <div class="atomic-level-badge">ORGANISMS</div>
+                    <h3 class="atomic-level-title">🦠 Sezioni complesse e indipendenti</h3>
+                </div>
+                <p class="atomic-level-description">
+                    Gli organismi sono sezioni complesse composte da molecole: header, form, card grid, hero section.
+                </p>
+                <div class="atomic-components">
+                    <div class="atomic-component">
+                        <div class="atomic-component-label">Header Organism</div>
+                    </div>
+                    <div class="atomic-component">
+                        <div class="atomic-component-label">Card Grid Organism</div>
+                    </div>
+                    <div class="atomic-component">
+                        <div class="atomic-component-label">Contact Form Organism</div>
+                    </div>
+                    <div class="atomic-component">
+                        <div class="atomic-component-label">Hero Section Organism</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Templates -->
+            <div class="atomic-level">
+                <div class="atomic-level-header">
+                    <div class="atomic-level-badge">TEMPLATES</div>
+                    <h3 class="atomic-level-title">📐 Layout astratti che definiscono la struttura</h3>
+                </div>
+                <p class="atomic-level-description">
+                    I template sono layout astratti che definiscono la struttura delle pagine senza contenuti reali.
+                </p>
+                <div class="atomic-components">
+                    <div class="atomic-component">
+                        <div class="atomic-component-label">📄 Landing Page Template</div>
+                    </div>
+                    <div class="atomic-component">
+                        <div class="atomic-component-label">📊 Dashboard Template</div>
+                    </div>
+                    <div class="atomic-component">
+                        <div class="atomic-component-label">🛒 E-commerce Template</div>
+                    </div>
+                    <div class="atomic-component">
+                        <div class="atomic-component-label">📝 Blog / Article Template</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Pages -->
+            <div class="atomic-level">
+                <div class="atomic-level-header">
+                    <div class="atomic-level-badge">PAGES</div>
+                    <h3 class="atomic-level-title">📃 Template + contenuti reali = pagine finali</h3>
+                </div>
+                <p class="atomic-level-description">
+                    Le pagine sono template con contenuti reali. Sono il prodotto finale visibile all'utente.
+                </p>
+                <div class="atomic-components">
+                    <div class="atomic-component">
+                        <div class="atomic-component-label">🏠 Homepage — Atelier Creativo</div>
+                    </div>
+                    <div class="atomic-component">
+                        <div class="atomic-component-label">💍 Servizio Gioielleria</div>
+                    </div>
+                    <div class="atomic-component">
+                        <div class="atomic-component-label">👤 Profilo Utente</div>
+                    </div>
+                    <div class="atomic-component">
+                        <div class="atomic-component-label">📬 Contatti & Form</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- WIREFRAME BUILDER -->
+    <section class="section" id="wireframe">
+        <div class="section-header">
+            <h2 class="section-title">Wireframe & Mockup Builder</h2>
+            <p class="section-subtitle">Crea wireframe e mockup interattivi trascinando componenti Atomic sulla canvas</p>
+        </div>
+        
+        <div class="wireframe-builder">
+            <div class="wireframe-toolbar">
+                <div class="wireframe-templates">
+                    <button class="wireframe-template-btn">🏠 Landing Page</button>
+                    <button class="wireframe-template-btn">📊 Dashboard</button>
+                    <button class="wireframe-template-btn">🛒 E-commerce</button>
+                    <button class="wireframe-template-btn">🎨 Portfolio</button>
+                    <button class="wireframe-template-btn">📝 Blog</button>
+                    <button class="wireframe-template-btn">📄 Canvas Vuota</button>
+                </div>
+                <div style="display: flex; gap: var(--space-sm);">
+                    <button class="btn btn-ghost">−</button>
+                    <span style="padding: var(--space-sm) var(--space-md); background: var(--bg-subtle); border-radius: var(--radius-md);">100%</span>
+                    <button class="btn btn-ghost">+</button>
+                    <button class="btn btn-ghost">↩</button>
+                    <button class="btn btn-ghost">🗑 Clear</button>
+                    <button class="btn btn-primary">📤 Export</button>
+                </div>
+            </div>
+            
+            <div class="wireframe-canvas">
+                <div style="text-align: center;">
+                    <div style="font-size: 48px; margin-bottom: var(--space-md);">🖱️</div>
+                    <div>Trascina i componenti qui</div>
+                    <div style="font-size: var(--text-small); margin-top: var(--space-sm);">oppure scegli un template sopra</div>
+                </div>
+            </div>
+            
+            <div class="wireframe-components">
+                <div class="wireframe-component">
+                    <div class="wireframe-component-icon">📝</div>
+                    <div class="wireframe-component-label">Titolo Heading</div>
+                </div>
+                <div class="wireframe-component">
+                    <div class="wireframe-component-icon">📄</div>
+                    <div class="wireframe-component-label">Paragraph</div>
+                </div>
+                <div class="wireframe-component">
+                    <div class="wireframe-component-icon">🔘</div>
+                    <div class="wireframe-component-label">Button</div>
+                </div>
+                <div class="wireframe-component">
+                    <div class="wireframe-component-icon">⬜</div>
+                    <div class="wireframe-component-label">Button Outline</div>
+                </div>
+                <div class="wireframe-component">
+                    <div class="wireframe-component-icon">📥</div>
+                    <div class="wireframe-component-label">Input</div>
+                </div>
+                <div class="wireframe-component">
+                    <div class="wireframe-component-icon">🖼️</div>
+                    <div class="wireframe-component-label">Image</div>
+                </div>
+                <div class="wireframe-component">
+                    <div class="wireframe-component-icon">🃏</div>
+                    <div class="wireframe-component-label">Card</div>
+                </div>
+                <div class="wireframe-component">
+                    <div class="wireframe-component-icon">🧭</div>
+                    <div class="wireframe-component-label">Navbar</div>
+                </div>
+                <div class="wireframe-component">
+                    <div class="wireframe-component-icon">🦸</div>
+                    <div class="wireframe-component-label">Hero Section</div>
+                </div>
+                <div class="wireframe-component">
+                    <div class="wireframe-component-icon">📎</div>
+                    <div class="wireframe-component-label">Footer</div>
+                </div>
+                <div class="wireframe-component">
+                    <div class="wireframe-component-icon">🏷️</div>
+                    <div class="wireframe-component-label">Badge</div>
+                </div>
+                <div class="wireframe-component">
+                    <div class="wireframe-component-icon">📊</div>
+                    <div class="wireframe-component-label">Stats Row</div>
+                </div>
+                <div class="wireframe-component">
+                    <div class="wireframe-component-icon">📋</div>
+                    <div class="wireframe-component-label">Form</div>
+                </div>
+                <div class="wireframe-component">
+                    <div class="wireframe-component-icon">🗂️</div>
+                    <div class="wireframe-component-label">Card Grid</div>
+                </div>
+                <div class="wireframe-component">
+                    <div class="wireframe-component-icon">⚠️</div>
+                    <div class="wireframe-component-label">Alert</div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- SERVICES SECTION -->
+    <section class="section" id="services">
+        <div class="section-header">
+            <h2 class="section-title">I Nostri Servizi</h2>
+            <p class="section-subtitle">Sei discipline creative, un unico linguaggio estetico</p>
+        </div>
+        
+        <div class="services-grid">
+            <!-- Service 1: Gioielleria -->
+            <div class="service-card">
+                <div class="service-card-header">
+                    <div class="service-number">01</div>
+                    <div class="service-icon">💍</div>
+                    <h3 class="service-title">Realizzazione Gioielli</h3>
+                    <div class="service-subtitle">GIOIELLERIA ARTIGIANALE</div>
+                </div>
+                <div class="service-card-body">
+                    <p class="service-description">
+                        Creazione di gioielli artigianali unici, dal concept al pezzo finito. Ogni creazione nasce da un disegno originale, realizzato con metalli preziosi e pietre selezionate. La grafica promozionale riflette la stessa cura: tonalità calde, fotografia editoriale, tipografia raffinata.
+                    </p>
+                    <div class="service-tags">
+                        <span class="service-tag">Design CAD</span>
+                        <span class="service-tag">Modellazione</span>
+                        <span class="service-tag">Fusione</span>
+                        <span class="service-tag">Incastonatura</span>
+                        <span class="service-tag">Lucidatura</span>
+                    </div>
+                    <div class="service-cta">
+                        <a href="#" class="btn btn-primary">Richiedi Preventivo</a>
+                        <a href="#" class="btn btn-ghost">Scopri di più →</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Service 2: Illustrazioni -->
+            <div class="service-card">
+                <div class="service-card-header">
+                    <div class="service-number">02</div>
+                    <div class="service-icon">🎨</div>
+                    <h3 class="service-title">Illustrazioni</h3>
+                    <div class="service-subtitle">ILLUSTRAZIONI ORIGINALI</div>
+                </div>
+                <div class="service-card-body">
+                    <p class="service-description">
+                        Illustrazioni originali per editoria, branding, packaging e comunicazione. Stili che spaziano dal botanico al contemporaneo, dal realistico all'astratto. Ogni illustrazione è pensata per comunicare un messaggio preciso con eleganza e immediatezza visiva.
+                    </p>
+                    <div class="service-tags">
+                        <span class="service-tag">Editoriale</span>
+                        <span class="service-tag">Botanico</span>
+                        <span class="service-tag">Branding</span>
+                        <span class="service-tag">Packaging</span>
+                        <span class="service-tag">Digital Art</span>
+                    </div>
+                    <div class="service-cta">
+                        <a href="#" class="btn btn-primary">Commissiona</a>
+                        <a href="#" class="btn btn-ghost">Portfolio →</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Service 3: Animazione -->
+            <div class="service-card">
+                <div class="service-card-header">
+                    <div class="service-number">03</div>
+                    <div class="service-icon">🎬</div>
+                    <h3 class="service-title">Animazione Frame by Frame</h3>
+                    <div class="service-subtitle">24 FPS FRAME BY FRAME</div>
+                </div>
+                <div class="service-card-body">
+                    <p class="service-description">
+                        Animazioni tradizionali disegnate a mano, frame per frame. Dall'animazione artistica per videoclip ai motion graphics per brand, ogni movimento è pensato per raccontare una storia con fluidità e carattere. La tecnica classica incontra la produzione digitale moderna.
+                    </p>
+                    <div class="service-tags">
+                        <span class="service-tag">Storyboard</span>
+                        <span class="service-tag">Keyframe</span>
+                        <span class="service-tag">Inbetween</span>
+                        <span class="service-tag">Coloring</span>
+                        <span class="service-tag">Compositing</span>
+                    </div>
+                    <div class="service-cta">
+                        <a href="#" class="btn btn-primary">Inizia Progetto</a>
+                        <a href="#" class="btn btn-ghost">Showreel →</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Service 4: Graphic Design -->
+            <div class="service-card">
+                <div class="service-card-header">
+                    <div class="service-number">04</div>
+                    <div class="service-icon">🎯</div>
+                    <h3 class="service-title">Grafiche Designer</h3>
+                    <div class="service-subtitle">GRAPHIC DESIGN & BRAND IDENTITY</div>
+                </div>
+                <div class="service-card-body">
+                    <p class="service-description">
+                        Identità visiva completa: logo, brand guide, packaging, materiale pubblicitario, social media kit. Ogni elemento grafico è progettato per comunicare i valori del brand con coerenza e impatto. Dal biglietto da visita alla campagna completa.
+                    </p>
+                    <div class="service-tags">
+                        <span class="service-tag">Logo Design</span>
+                        <span class="service-tag">Brand Identity</span>
+                        <span class="service-tag">Packaging</span>
+                        <span class="service-tag">Social Media</span>
+                        <span class="service-tag">Print</span>
+                    </div>
+                    <div class="service-cta">
+                        <a href="#" class="btn btn-primary">Richiedi Preventivo</a>
+                        <a href="#" class="btn btn-ghost">Case Studies →</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Service 5: Sartoria -->
+            <div class="service-card">
+                <div class="service-card-header">
+                    <div class="service-number">05</div>
+                    <div class="service-icon">🧵</div>
+                    <h3 class="service-title">Sarto & Realizzazione Vestiti</h3>
+                    <div class="service-subtitle">SARTORIA ARTIGIANALE</div>
+                </div>
+                <div class="service-card-body">
+                    <p class="service-description">
+                        Sartoria artigianale su misura: dal modello alla realizzazione completa. Abiti da cerimonia, capi su misura, restyling e riparazioni di pregio. Ogni capo è unico, costruito attorno alla persona che lo indosserà, con tessuti selezionati e finiture curate nei minimi dettagli.
+                    </p>
+                    <div class="service-tags">
+                        <span class="service-tag">Su Misura</span>
+                        <span class="service-tag">Cerimonia</span>
+                        <span class="service-tag">Restyling</span>
+                        <span class="service-tag">Modellistica</span>
+                        <span class="service-tag">Confezione</span>
+                    </div>
+                    <div class="service-cta">
+                        <a href="#" class="btn btn-primary">Prenota Consulenza</a>
+                        <a href="#" class="btn btn-ghost">Collezione →</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Service 6: Siti Web -->
+            <div class="service-card">
+                <div class="service-card-header">
+                    <div class="service-number">06</div>
+                    <div class="service-icon">🌐</div>
+                    <h3 class="service-title">Siti Web</h3>
+                    <div class="service-subtitle">WEB DESIGN & DEVELOPMENT</div>
+                </div>
+                <div class="service-card-body">
+                    <p class="service-description">
+                        Progettazione e sviluppo di siti web moderni, responsivi e performanti. Dall'e-commerce al portfolio, dalla landing page alla web app. Design centrato sull'utente, codice pulito, SEO ottimizzato. Ogni sito è un'estensione digitale della vostra identità brand.
+                    </p>
+                    <div class="service-tags">
+                        <span class="service-tag">UI/UX Design</span>
+                        <span class="service-tag">Sviluppo</span>
+                        <span class="service-tag">E-commerce</span>
+                        <span class="service-tag">SEO</span>
+                        <span class="service-tag">Hosting</span>
+                    </div>
+                    <div class="service-cta">
+                        <a href="#" class="btn btn-primary">Richiedi Preventivo</a>
+                        <a href="#" class="btn btn-ghost">Demo →</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- EXPORT SECTION -->
+    <section class="section" id="export">
+        <div class="section-header">
+            <h2 class="section-title">Export & Integrazione</h2>
+            <p class="section-subtitle">Esporta il tuo design system personalizzato in diversi formati pronti all'uso</p>
+        </div>
+        
+        <div class="export-grid">
+            <div class="export-card" onclick="exportCSS()">
+                <div class="export-icon">🎨</div>
+                <div class="export-title">CSS Variables</div>
+                <div class="export-description">Custom properties pronte per il web</div>
+            </div>
+            
+            <div class="export-card" onclick="exportJSON()">
+                <div class="export-icon">📋</div>
+                <div class="export-title">JSON Tokens</div>
+                <div class="export-description">Design tokens in formato JSON</div>
+            </div>
+            
+            <div class="export-card" onclick="exportSCSS()">
+                <div class="export-icon">💅</div>
+                <div class="export-title">SCSS Variables</div>
+                <div class="export-description">Variabili Sass per il tuo progetto</div>
+            </div>
+            
+            <div class="export-card" onclick="exportWireframe()">
+                <div class="export-icon">🖥️</div>
+                <div class="export-title">Wireframe HTML</div>
+                <div class="export-description">Pagina HTML completa del wireframe</div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <div class="footer-logo">Atelier Creativo</div>
+                <p class="footer-description">
+                    Design system completo per sei discipline creative. Coerenza, eleganza, artigianalità.
+                </p>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Servizi</h4>
+                <ul class="footer-links">
+                    <li><a href="#">Gioielleria</a></li>
+                    <li><a href="#">Illustrazioni</a></li>
+                    <li><a href="#">Animazione</a></li>
+                    <li><a href="#">Graphic Design</a></li>
+                    <li><a href="#">Sartoria</a></li>
+                    <li><a href="#">Siti Web</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Design System</h4>
+                <ul class="footer-links">
+                    <li><a href="#palette">Colori</a></li>
+                    <li><a href="#typography">Tipografia</a></li>
+                    <li><a href="#tokens">Token</a></li>
+                    <li><a href="#atomic">Atomic Design</a></li>
+                    <li><a href="#wireframe">Wireframe Builder</a></li>
+                    <li><a href="#">Linee Guida</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Contatti</h4>
+                <ul class="footer-links">
+                    <li><a href="mailto:info@ateliercreativo.it">info@ateliercreativo.it</a></li>
+                    <li><a href="tel:+39021234567">+39 02 1234567</a></li>
+                    <li><a href="#">Milano, Italia</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <div>© 2024 Atelier Creativo — Design System v2.0</div>
+            <div>Atomic Design — Wireframe Builder — Brand #6E4A4A</div>
+        </div>
+    </footer>
+    
+    <!-- JAVASCRIPT -->
+    <script>
+        // ============================================
+        // NAVBAR SCROLL EFFECT
+        // ============================================
+        const navbar = document.getElementById('navbar');
+        
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+        
+        // ============================================
+        // COLOR EDITOR
+        // ============================================
+        const colorSwatches = document.querySelectorAll('.color-swatch');
+        
+        colorSwatches.forEach(swatch => {
+            swatch.addEventListener('click', function() {
+                const colorVar = this.dataset.color;
+                const currentColor = getComputedStyle(document.documentElement).getPropertyValue(colorVar).trim();
+                
+                const input = document.createElement('input');
+                input.type = 'color';
+                input.value = rgbToHex(currentColor) || '#6E4A4A';
+                input.style.position = 'absolute';
+                input.style.opacity = '0';
+                document.body.appendChild(input);
+                
+                input.addEventListener('change', (e) => {
+                    document.documentElement.style.setProperty(colorVar, e.target.value);
+                    this.style.background = e.target.value;
+                    document.body.removeChild(input);
+                });
+                
+                input.click();
+            });
+        });
+        
+        function rgbToHex(rgb) {
+            if (rgb.startsWith('#')) return rgb;
+            const result = /^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/.exec(rgb);
+            if (!result) return null;
+            return '#' + result.slice(1).map(x => {
+                const hex = parseInt(x).toString(16);
+                return hex.length === 1 ? '0' + hex : hex;
+            }).join('');
+        }
+        
+        function resetColors() {
+            document.documentElement.style.cssText = '';
+            colorSwatches.forEach(swatch => {
+                swatch.style.background = '';
+            });
+        }
+        
+        function randomBrand() {
+            const colors = [
+                '#6E4A4A', '#4A6E5A', '#4A5A6E', '#6E5A4A', '#5A4A6E',
+                '#6E4A5A', '#4A6E6E', '#6E6E4A', '#5A6E4A', '#6E4A6E'
+            ];
+            const randomColor = colors[Math.floor(Math.random() * colors.length)];
+            document.documentElement.style.setProperty('--color-primary', randomColor);
+            
+            // Update related colors
+            const darker = adjustBrightness(randomColor, -20);
+            const lighter = adjustBrightness(randomColor, 40);
+            document.documentElement.style.setProperty('--color-primary-hover', darker);
+            document.documentElement.style.setProperty('--color-primary-light', lighter);
+        }
+        
+        function adjustBrightness(hex, percent) {
+            const num = parseInt(hex.replace('#', ''), 16);
+            const amt = Math.round(2.55 * percent);
+            const R = (num >> 16) + amt;
+            const G = (num >> 8 & 0x00FF) + amt;
+            const B = (num & 0x0000FF) + amt;
+            return '#' + (
+                0x1000000 +
+                (R < 255 ? (R < 1 ? 0 : R) : 255) * 0x10000 +
+                (G < 255 ? (G < 1 ? 0 : G) : 255) * 0x100 +
+                (B < 255 ? (B < 1 ? 0 : B) : 255)
+            ).toString(16).slice(1);
+        }
+        
+        // ============================================
+        // TYPOGRAPHY EDITOR
+        // ============================================
+        function updateTypography() {
+            const headingFont = document.getElementById('headingFont').value;
+            const bodyFont = document.getElementById('bodyFont').value;
+            const typeScale = parseFloat(document.getElementById('typeScale').value);
+            const lineHeight = parseFloat(document.getElementById('lineHeight').value);
+            
+            document.documentElement.style.setProperty('--font-heading', headingFont);
+            document.documentElement.style.setProperty('--font-body', bodyFont);
+            document.documentElement.style.setProperty('--line-height-body', lineHeight);
+            
+            // Update type scale
+            const baseSize = 16;
+            document.documentElement.style.setProperty('--text-display', (baseSize * Math.pow(typeScale, 3)) + 'px');
+            document.documentElement.style.setProperty('--text-h1', (baseSize * Math.pow(typeScale, 2)) + 'px');
+            document.documentElement.style.setProperty('--text-h2', (baseSize * Math.pow(typeScale, 1.5)) + 'px');
+            document.documentElement.style.setProperty('--text-title', (baseSize * typeScale) + 'px');
+            document.documentElement.style.setProperty('--text-body', baseSize + 'px');
+            document.documentElement.style.setProperty('--text-small', (baseSize / typeScale) + 'px');
+            
+            // Update preview
+            document.querySelector('.preview-heading').style.fontFamily = headingFont;
+            document.querySelector('.preview-body').style.fontFamily = bodyFont;
+            document.querySelector('.preview-caption').style.fontFamily = bodyFont;
+        }
+        
+        function resetTypography() {
+            document.getElementById('headingFont').value = "'Playfair Display', serif";
+            document.getElementById('bodyFont').value = "'Inter', sans-serif";
+            document.getElementById('typeScale').value = '1.25';
+            document.getElementById('lineHeight').value = '1.5';
+            updateTypography();
+        }
+        
+        // ============================================
+        // EXPORT FUNCTIONS
+        // ============================================
+        function exportCSS() {
+            const css = `:root {
+    /* Primitive - Brown Scale */
+    --brown-50: #F3EAEA;
+    --brown-100: #E9DCDC;
+    --brown-200: #DCCECE;
+    --brown-300: #C5BDBA;
+    --brown-400: #B09595;
+    --brown-500: #967373;
+    --brown-600: #805A5A;
+    --brown-700: #6E4A4A;
+    --brown-800: #5E3D3D;
+    --brown-900: #4F3232;
+    
+    /* Primitive - Neutral Scale */
+    --neutral-50: #FAFAFA;
+    --neutral-100: #F5F5F5;
+    --neutral-200: #E5E5E5;
+    --neutral-300: #D4D4D4;
+    --neutral-400: #A3A3A3;
+    --neutral-500: #737373;
+    --neutral-600: #525252;
+    --neutral-700: #404040;
+    --neutral-800: #262626;
+    --neutral-900: #171717;
+    
+    /* Semantic - Primary */
+    --color-primary: var(--brown-700);
+    --color-primary-hover: var(--brown-800);
+    --color-primary-active: var(--brown-900);
+    --color-primary-subtle: var(--brown-100);
+    --color-primary-light: var(--brown-50);
+    --color-on-primary: #FFFFFF;
+    
+    /* Semantic - Background */
+    --bg-app: var(--neutral-50);
+    --bg-default: #FFFFFF;
+    --bg-subtle: var(--neutral-100);
+    
+    /* Semantic - Surface */
+    --surface-default: #FFFFFF;
+    --surface-elevated: var(--neutral-200);
+    
+    /* Semantic - Text */
+    --text-primary: var(--neutral-900);
+    --text-secondary: var(--neutral-600);
+    --text-disabled: var(--neutral-400);
+    
+    /* Semantic - Border */
+    --border-default: var(--neutral-300);
+    --border-strong: var(--neutral-400);
+    
+    /* Typography */
+    --font-heading: 'Playfair Display', serif;
+    --font-body: 'Inter', sans-serif;
+    --font-scale: 1.25;
+    
+    /* Type Scale */
+    --text-display: 39px;
+    --text-h1: 31px;
+    --text-h2: 25px;
+    --text-title: 20px;
+    --text-body: 16px;
+    --text-small: 13px;
+    --text-overline: 11px;
+    
+    /* Line Heights */
+    --line-height-heading: 1.2;
+    --line-height-body: 1.5;
+}`;
+            
+            downloadFile('design-tokens.css', css);
+        }
+        
+        function exportJSON() {
+            const tokens = {
+                primitive: {
+                    brown: {
+                        50: '#F3EAEA',
+                        100: '#E9DCDC',
+                        200: '#DCCECE',
+                        300: '#C5BDBA',
+                        400: '#B09595',
+                        500: '#967373',
+                        600: '#805A5A',
+                        700: '#6E4A4A',
+                        800: '#5E3D3D',
+                        900: '#4F3232'
+                    },
+                    neutral: {
+                        50: '#FAFAFA',
+                        100: '#F5F5F5',
+                        200: '#E5E5E5',
+                        300: '#D4D4D4',
+                        400: '#A3A3A3',
+                        500: '#737373',
+                        600: '#525252',
+                        700: '#404040',
+                        800: '#262626',
+                        900: '#171717'
+                    }
+                },
+                semantic: {
+                    primary: {
+                        default: '{primitive.brown.700}',
+                        hover: '{primitive.brown.800}',
+                        active: '{primitive.brown.900}',
+                        subtle: '{primitive.brown.100}',
+                        light: '{primitive.brown.50}',
+                        onPrimary: '#FFFFFF'
+                    },
+                    background: {
+                        app: '{primitive.neutral.50}',
+                        default: '#FFFFFF',
+                        subtle: '{primitive.neutral.100}'
+                    },
+                    surface: {
+                        default: '#FFFFFF',
+                        elevated: '{primitive.neutral.200}'
+                    },
+                    text: {
+                        primary: '{primitive.neutral.900}',
+                        secondary: '{primitive.neutral.600}',
+                        disabled: '{primitive.neutral.400}'
+                    },
+                    border: {
+                        default: '{primitive.neutral.300}',
+                        strong: '{primitive.neutral.400}'
+                    }
+                },
+                typography: {
+                    fontFamily: {
+                        heading: "'Playfair Display', serif",
+                        body: "'Inter', sans-serif"
+                    },
+                    fontSize: {
+                        display: '39px',
+                        h1: '31px',
+                        h2: '25px',
+                        title: '20px',
+                        body: '16px',
+                        small: '13px',
+                        overline: '11px'
+                    },
+                    lineHeight: {
+                        heading: 1.2,
+                        body: 1.5
+                    }
+                }
+            };
+            
+            downloadFile('design-tokens.json', JSON.stringify(tokens, null, 2));
+        }
+        
+        function exportSCSS() {
+            const scss = `// Primitive - Brown Scale
+$brown-50: #F3EAEA;
+$brown-100: #E9DCDC;
+$brown-200: #DCCECE;
+$brown-300: #C5BDBA;
+$brown-400: #B09595;
+$brown-500: #967373;
+$brown-600: #805A5A;
+$brown-700: #6E4A4A;
+$brown-800: #5E3D3D;
+$brown-900: #4F3232;
+
+// Primitive - Neutral Scale
+$neutral-50: #FAFAFA;
+$neutral-100: #F5F5F5;
+$neutral-200: #E5E5E5;
+$neutral-300: #D4D4D4;
+$neutral-400: #A3A3A3;
+$neutral-500: #737373;
+$neutral-600: #525252;
+$neutral-700: #404040;
+$neutral-800: #262626;
+$neutral-900: #171717;
+
+// Semantic - Primary
+$color-primary: $brown-700;
+$color-primary-hover: $brown-800;
+$color-primary-active: $brown-900;
+$color-primary-subtle: $brown-100;
+$color-primary-light: $brown-50;
+$color-on-primary: #FFFFFF;
+
+// Semantic - Background
+$bg-app: $neutral-50;
+$bg-default: #FFFFFF;
+$bg-subtle: $neutral-100;
+
+// Semantic - Surface
+$surface-default: #FFFFFF;
+$surface-elevated: $neutral-200;
+
+// Semantic - Text
+$text-primary: $neutral-900;
+$text-secondary: $neutral-600;
+$text-disabled: $neutral-400;
+
+// Semantic - Border
+$border-default: $neutral-300;
+$border-strong: $neutral-400;
+
+// Typography
+$font-heading: 'Playfair Display', serif;
+$font-body: 'Inter', sans-serif;
+$font-scale: 1.25;
+
+// Type Scale
+$text-display: 39px;
+$text-h1: 31px;
+$text-h2: 25px;
+$text-title: 20px;
+$text-body: 16px;
+$text-small: 13px;
+$text-overline: 11px;
+
+// Line Heights
+$line-height-heading: 1.2;
+$line-height-body: 1.5;`;
+            
+            downloadFile('design-tokens.scss', scss);
+        }
+        
+        function exportWireframe() {
+            const html = `<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wireframe - Atelier Creativo</title>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: #FAFAFA;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .header {
+            background: #6E4A4A;
+            color: white;
+            padding: 40px;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .content {
+            background: white;
+            padding: 40px;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Atelier Creativo</h1>
+            <p>Wireframe Template</p>
+        </div>
+        <div class="content">
+            <h2>Contenuto Principale</h2>
+            <p>Questo è un template wireframe di base per Atelier Creativo.</p>
+        </div>
+    </div>
+</body>
+</html>`;
+            
+            downloadFile('wireframe.html', html);
+        }
+        
+        function downloadFile(filename, content) {
+            const blob = new Blob([content], { type: 'text/plain' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+        }
+        
+        // ============================================
+        // SMOOTH SCROLL
+        // ============================================
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+        
+        // ============================================
+        // INTERSECTION OBSERVER FOR ANIMATIONS
+        // ============================================
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-fadeIn');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+        
+        document.querySelectorAll('.vision-card, .principle-card, .service-card, .export-card').forEach(el => {
+            observer.observe(el);
+        });
+        
+        // ============================================
+        // WIREFRAME BUILDER - DRAG AND DROP
+        // ============================================
+        const wireframeComponents = document.querySelectorAll('.wireframe-component');
+        const wireframeCanvas = document.querySelector('.wireframe-canvas');
+        
+        wireframeComponents.forEach(component => {
+            component.addEventListener('dragstart', (e) => {
+                e.dataTransfer.setData('text/plain', component.querySelector('.wireframe-component-label').textContent);
+            });
+            
+            component.setAttribute('draggable', 'true');
+        });
+        
+        wireframeCanvas.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            wireframeCanvas.style.borderColor = 'var(--color-primary)';
+        });
+        
+        wireframeCanvas.addEventListener('dragleave', () => {
+            wireframeCanvas.style.borderColor = 'var(--border-default)';
+        });
+        
+        wireframeCanvas.addEventListener('drop', (e) => {
+            e.preventDefault();
+            wireframeCanvas.style.borderColor = 'var(--border-default)';
+            
+            const componentName = e.dataTransfer.getData('text/plain');
+            
+            // Clear placeholder
+            if (wireframeCanvas.querySelector('div[style*="text-align: center"]')) {
+                wireframeCanvas.innerHTML = '';
+            }
+            
+            // Add component
+            const componentDiv = document.createElement('div');
+            componentDiv.style.cssText = `
+                padding: 20px;
+                background: var(--bg-subtle);
+                border: 2px dashed var(--border-default);
+                border-radius: 8px;
+                margin: 10px;
+                text-align: center;
+                cursor: move;
+            `;
+            componentDiv.textContent = componentName;
+            wireframeCanvas.appendChild(componentDiv);
+        });
+        
+        // ============================================
+        // TEMPLATE BUTTONS
+        // ============================================
+        const templateButtons = document.querySelectorAll('.wireframe-template-btn');
+        
+        templateButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const templateName = button.textContent.trim();
+                loadTemplate(templateName);
+            });
+        });
+        
+        function loadTemplate(templateName) {
+            wireframeCanvas.innerHTML = '';
+            
+            const templateContent = document.createElement('div');
+            templateContent.style.cssText = `
+                width: 100%;
+                padding: 20px;
+            `;
+            
+            switch(templateName) {
+                case '🏠 Landing Page':
+                    templateContent.innerHTML = `
+                        <div style="background: var(--color-primary); color: white; padding: 60px 20px; text-align: center; margin-bottom: 20px; border-radius: 8px;">
+                            <h1 style="margin: 0;">Hero Section</h1>
+                            <p style="margin: 10px 0 0;">Sottotitolo del hero</p>
+                        </div>
+                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 20px;">
+                            <div style="background: var(--bg-subtle); padding: 20px; border-radius: 8px;">Card 1</div>
+                            <div style="background: var(--bg-subtle); padding: 20px; border-radius: 8px;">Card 2</div>
+                            <div style="background: var(--bg-subtle); padding: 20px; border-radius: 8px;">Card 3</div>
+                        </div>
+                        <div style="background: var(--bg-subtle); padding: 40px; text-align: center; border-radius: 8px;">
+                            <h2>CTA Section</h2>
+                            <button style="margin-top: 20px; padding: 12px 24px; background: var(--color-primary); color: white; border: none; border-radius: 8px; cursor: pointer;">Call to Action</button>
+                        </div>
+                    `;
+                    break;
+                    
+                case '📊 Dashboard':
+                    templateContent.innerHTML = `
+                        <div style="display: grid; grid-template-columns: 200px 1fr; gap: 20px;">
+                            <div style="background: var(--bg-subtle); padding: 20px; border-radius: 8px; min-height: 400px;">
+                                <h3>Sidebar</h3>
+                                <ul style="list-style: none; padding: 0; margin-top: 20px;">
+                                    <li style="padding: 10px; margin-bottom: 5px; background: white; border-radius: 4px;">Dashboard</li>
+                                    <li style="padding: 10px; margin-bottom: 5px;">Analytics</li>
+                                    <li style="padding: 10px; margin-bottom: 5px;">Settings</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 20px;">
+                                    <div style="background: var(--bg-subtle); padding: 20px; border-radius: 8px;">
+                                        <div style="font-size: 12px; color: var(--text-secondary);">Metric 1</div>
+                                        <div style="font-size: 32px; font-weight: 700; margin-top: 10px;">1,234</div>
+                                    </div>
+                                    <div style="background: var(--bg-subtle); padding: 20px; border-radius: 8px;">
+                                        <div style="font-size: 12px; color: var(--text-secondary);">Metric 2</div>
+                                        <div style="font-size: 32px; font-weight: 700; margin-top: 10px;">5,678</div>
+                                    </div>
+                                    <div style="background: var(--bg-subtle); padding: 20px; border-radius: 8px;">
+                                        <div style="font-size: 12px; color: var(--text-secondary);">Metric 3</div>
+                                        <div style="font-size: 32px; font-weight: 700; margin-top: 10px;">9,012</div>
+                                    </div>
+                                </div>
+                                <div style="background: var(--bg-subtle); padding: 20px; border-radius: 8px; min-height: 300px;">
+                                    <h3>Main Content</h3>
+                                    <p>Chart or table goes here</p>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    break;
+                    
+                case '🛒 E-commerce':
+                    templateContent.innerHTML = `
+                        <div style="background: var(--color-primary); color: white; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <h2 style="margin: 0;">Shop</h2>
+                                <div>🛒 Cart (0)</div>
+                            </div>
+                        </div>
+                        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px;">
+                            ${Array(8).fill(0).map((_, i) => `
+                                <div style="background: var(--bg-subtle); border-radius: 8px; overflow: hidden;">
+                                    <div style="aspect-ratio: 1; background: var(--neutral-200);"></div>
+                                    <div style="padding: 15px;">
+                                        <div style="font-weight: 600;">Product ${i + 1}</div>
+                                        <div style="color: var(--color-primary); font-weight: 700; margin-top: 5px;">€99.00</div>
+                                        <button style="width: 100%; margin-top: 10px; padding: 8px; background: var(--color-primary); color: white; border: none; border-radius: 4px; cursor: pointer;">Add to Cart</button>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    `;
+                    break;
+                    
+                case '🎨 Portfolio':
+                    templateContent.innerHTML = `
+                        <div style="text-align: center; padding: 60px 20px; margin-bottom: 40px;">
+                            <h1>Portfolio</h1>
+                            <p style="color: var(--text-secondary);">Selected works and projects</p>
+                        </div>
+                        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px;">
+                            ${Array(6).fill(0).map((_, i) => `
+                                <div style="background: var(--bg-subtle); border-radius: 8px; overflow: hidden;">
+                                    <div style="aspect-ratio: 16/9; background: var(--neutral-200);"></div>
+                                    <div style="padding: 20px;">
+                                        <h3 style="margin: 0 0 10px;">Project ${i + 1}</h3>
+                                        <p style="margin: 0; color: var(--text-secondary);">Description of the project and its key features.</p>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    `;
+                    break;
+                    
+                case '📝 Blog':
+                    templateContent.innerHTML = `
+                        <div style="max-width: 800px; margin: 0 auto;">
+                            <article style="background: white; padding: 40px; border-radius: 8px; margin-bottom: 30px;">
+                                <div style="font-size: 12px; color: var(--text-secondary); margin-bottom: 10px;">January 15, 2024</div>
+                                <h1 style="margin: 0 0 20px;">Blog Post Title</h1>
+                                <div style="aspect-ratio: 16/9; background: var(--neutral-200); border-radius: 8px; margin-bottom: 20px;"></div>
+                                <p style="line-height: 1.8; color: var(--text-secondary);">
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.
+                                </p>
+                                <p style="line-height: 1.8; color: var(--text-secondary);">
+                                    Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident.
+                                </p>
+                            </article>
+                            <article style="background: white; padding: 40px; border-radius: 8px;">
+                                <div style="font-size: 12px; color: var(--text-secondary); margin-bottom: 10px;">January 10, 2024</div>
+                                <h2 style="margin: 0 0 20px;">Another Blog Post</h2>
+                                <p style="line-height: 1.8; color: var(--text-secondary);">
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                                </p>
+                            </article>
+                        </div>
+                    `;
+                    break;
+                    
+                default:
+                    templateContent.innerHTML = `
+                        <div style="text-align: center; padding: 100px 20px; color: var(--text-disabled);">
+                            <div style="font-size: 48px; margin-bottom: 20px;">📄</div>
+                            <div>Canvas vuota - inizia a trascinare componenti</div>
+                        </div>
+                    `;
+            }
+            
+            wireframeCanvas.appendChild(templateContent);
+        }
+        
+        // ============================================
+        // ATOMIC COMPONENT INTERACTIONS
+        // ============================================
+        const atomicComponents = document.querySelectorAll('.atomic-component');
+        
+        atomicComponents.forEach(component => {
+            component.addEventListener('click', () => {
+                const componentName = component.querySelector('.atomic-component-label').textContent;
+                alert(`Componente: ${componentName}\n\nQuesto è un esempio di come il componente apparirà nel sistema.`);
+            });
+        });
+        
+        // ============================================
+        // INITIALIZE
+        // ============================================
+        console.log('🎨 Atelier Creativo Design System v2.0');
+        console.log('✨ Atomic Design + Wireframe Builder');
+        console.log('🎯 Brand Color: #6E4A4A');
+    </script>
+</body>
+</html>
